@@ -3,6 +3,8 @@
       "target": "ES6", // or "es2020" or any other version you prefer
       "module": "commonjs",
       "outDir": "./dist",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "rootDir": "./src",
       "strict": true,
       "esModuleInterop": true,

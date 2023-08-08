@@ -1,8 +1,21 @@
-// require('dotenv').config();
+import dotenv from "dotenv";
+
+const result = dotenv.config();
+
+if(result.error) {
+  // console.log(`Error loading envirnoment variable, aborting.`);
+  process.exit(1);
+} 
+
+console.log(process.env.PORT);
+
+import "reflect-metadata";
 import express from 'express';
 import { root } from './route/root';
+import { isInteger } from './route/utils';
+import { logger } from './route/logger';
+import { AppDataSource } from "./route/data-source";
 
-const port = process.env.PORT || 8000;
 const app = express();
 
 
@@ -13,17 +26,40 @@ app.route("/").get(root);
 }
 
 const startServer = () => {
+  
+  let port: number = 8000;
+
+  const portEnv: string | undefined = process.env.PORT,
+        portArg = process.argv[2];
+
+        if (portEnv !== undefined && isInteger(portEnv)) {
+          port = parseInt(portEnv);
+        }
+
+  if (!port && isInteger(portArg)){
+    port = parseInt(portArg);
+  }
+
+  if (!port) {
+    port = 8000;
+  }
 
   app.listen(port, () => {
-    console.log(`Server running on  port ${port}`);
+    logger.info(`Server running on  port ${port}`);
 });
 
 }
 
-setupExpress();
-startServer();
-// app.get('/', (req, res) => {
-//     res.send('Hello, World! THIS IS MY TYPESCRIPT/NODE PROJECT');
-//   });
 
+
+AppDataSource.initialize()
+    .then(()=>{
+      logger.info(`The datasource has been initialized successfully.`);
+      setupExpress();
+      startServer();
+    })
+    .catch(err => {
+      logger.error(`Error during datasource initialization.`, err);
+      process.exit(1);
+    })
 
