@@ -15,15 +15,34 @@ import { root } from './route/root';
 import { isInteger } from './route/utils';
 import { logger } from './route/logger';
 import { AppDataSource } from "./route/data-source";
+import path from 'path';
+import { Controller } from './route/routing';
+import { loginRender } from "./controller/authCtrl";
+
+
 
 const app = express();
+
+app.use(express.json()); // Used to parse JSON bodies
+app.use(express.urlencoded({ extended: true }));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '..','dist', 'views'));
+app.use(express.static(path.join(__dirname, '..', 'dist', 'public')));
+app.use(express.static(path.join(__dirname, '..', 'dist')));
+app.use(Controller);
+
 
 
 const setupExpress = () => {
   
 app.route("/").get(root);
+app.route("/login").get(Controller);
+
 
 }
+
+
 
 const startServer = () => {
   
@@ -62,4 +81,8 @@ AppDataSource.initialize()
       logger.error(`Error during datasource initialization.`, err);
       process.exit(1);
     })
+
+
+
+
 

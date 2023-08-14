@@ -16,9 +16,19 @@ const root_1 = require("./route/root");
 const utils_1 = require("./route/utils");
 const logger_1 = require("./route/logger");
 const data_source_1 = require("./route/data-source");
+const path_1 = __importDefault(require("path"));
+const routing_1 = require("./route/routing");
 const app = (0, express_1.default)();
+app.use(express_1.default.json()); // Used to parse JSON bodies
+app.use(express_1.default.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.set('views', path_1.default.join(__dirname, '..', 'dist', 'views'));
+app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'dist', 'public')));
+app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'dist')));
+app.use(routing_1.Controller);
 const setupExpress = () => {
     app.route("/").get(root_1.root);
+    app.route("/login").get(routing_1.Controller);
 };
 const startServer = () => {
     let port = 8000;
