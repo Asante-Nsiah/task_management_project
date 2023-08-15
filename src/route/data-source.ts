@@ -4,6 +4,7 @@ import { Task } from "../modules/task-entity";
 import { User } from "../modules/user-entity";
 import { KanbanColumn } from "../modules/kanban-entity";
 import { Project } from "../modules/project-entity";
+import { Invitation } from "../modules/invitation-entity";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -24,6 +25,7 @@ export const AppDataSource = new DataSource({
         Task,
         User,
         UsersProject,
+        Invitation
     ],
     synchronize:true,
     logging:true
