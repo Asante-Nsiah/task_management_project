@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique, Repository } from "type
 @Unique(['email'])
 export class Invitation {
   @PrimaryGeneratedColumn()
-    id!: number;
+  id: any;
 
   @Column()
   email: string;
@@ -17,6 +17,7 @@ export class Invitation {
     full_name: any;
 
   constructor(email: string, fullName: string, defaultPassword: string) {
+    
     this.email = email;
     this.fullName = fullName;
     this.defaultPassword = defaultPassword;

@@ -30,6 +30,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..','dist', 'views'));
 app.use(express.static(path.join(__dirname, '..', 'dist', 'public')));
 app.use(express.static(path.join(__dirname, '..', 'dist')));
+app.use(express.static(path.join(__dirname, 'dist', 'modules')));
 app.use(Controller);
 
 
@@ -38,6 +39,11 @@ const setupExpress = () => {
   
 app.route("/").get(root);
 app.route("/login").get(Controller);
+app.route("/loginAccount").post(Controller);
+app.route("/loginAccount").get(Controller);
+app.route("/set-new-password").get(Controller);
+app.route("/Users").get(Controller);
+app.route("/adminBoard").get(Controller);
 
 
 }
@@ -81,8 +87,6 @@ AppDataSource.initialize()
       logger.error(`Error during datasource initialization.`, err);
       process.exit(1);
     })
-
-
 
 
 

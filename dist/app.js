@@ -25,10 +25,16 @@ app.set('view engine', 'ejs');
 app.set('views', path_1.default.join(__dirname, '..', 'dist', 'views'));
 app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'dist', 'public')));
 app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'dist')));
+app.use(express_1.default.static(path_1.default.join(__dirname, 'dist', 'modules')));
 app.use(routing_1.Controller);
 const setupExpress = () => {
     app.route("/").get(root_1.root);
     app.route("/login").get(routing_1.Controller);
+    app.route("/loginAccount").post(routing_1.Controller);
+    app.route("/loginAccount").get(routing_1.Controller);
+    app.route("/set-new-password").get(routing_1.Controller);
+    app.route("/Users").get(routing_1.Controller);
+    app.route("/adminBoard").get(routing_1.Controller);
 };
 const startServer = () => {
     let port = 8000;

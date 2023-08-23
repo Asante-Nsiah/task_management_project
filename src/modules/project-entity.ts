@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user-entity'; 
+import { Users } from './user-entity'; 
 
 @Entity()
 export class Project {
@@ -12,9 +12,9 @@ export class Project {
     @Column({ type: 'text', nullable: true })
     description?: string;
 
-    @ManyToOne(() => User, user => user.projects, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Users, user => user.projects, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'owner_id' })
-    owner!: User;
+    owner!: Users;
     projectUsers: any;
     kanbanColumns: any;
     usersProjects: any;

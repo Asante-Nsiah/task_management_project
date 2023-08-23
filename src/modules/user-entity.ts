@@ -2,27 +2,54 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 
 @Entity()
 @Unique(['email'])
-export class User {
-    @PrimaryGeneratedColumn()
+export class Users {
+    @PrimaryGeneratedColumn({ name: "id" })
     id: number;
 
     @Column({ name: 'full_name', length: 255 })
-    fullName: string;
+    full_name: string;
 
     @Column({ length: 255 })
     email: string;
 
+    @Column({ default: false }) 
+    isAdmin: boolean;
+
     @Column({ length: 255 })
-    password: string;
+    password: string
     projects: any;
     userProjects: any;
     assignedTasks: any;
 
     constructor() {
         this.id = 0;
-        this.fullName = '';
+        this.full_name = '';
         this.email = '';
         this.password = '';
+        this.isAdmin = false;
     }
 }
 
+// import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+
+// @Entity()
+// @Unique(['email'])
+// export class Users {
+//     @PrimaryGeneratedColumn({ name: "id" })
+//     id!: number;
+
+//     @Column({ name: 'full_name', length: 255 })
+//     full_name: string = '';
+
+//     @Column({ length: 255 })
+//     email: string = '';
+
+//     @Column({ default: false }) 
+//     isAdmin: boolean = false;
+
+//     @Column({ length: 255 })
+//     password: string = '';
+//     projects: any;
+//     userProjects: any;
+//     assignedTasks: any;
+// }

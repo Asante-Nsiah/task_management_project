@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user-entity'; 
+import { Users } from './user-entity'; 
 import { Project } from './project-entity'; 
 
 @Entity(
@@ -11,9 +11,9 @@ export class UsersProject {
     @PrimaryColumn()
     projectId!: number;
 
-    @ManyToOne(() => User, user => user.userProjects, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Users, user => user.userProjects, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'users_id' })
-    user!: User;
+    user!: Users;
 
     @ManyToOne(() => Project, project => project.usersProject, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'project_id' })
