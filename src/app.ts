@@ -17,13 +17,29 @@ import { logger } from './route/logger';
 import { AppDataSource } from "./route/data-source";
 import path from 'path';
 import { Controller } from './route/routing';
-import { loginRender } from "./controller/authCtrl";
-
+import session from 'express-session';
+import passport from 'passport';
+import initialize   from "./config/passportConfig";
+import { Strategy as LocalStrategy } from 'passport-local';
 
 
 const app = express();
 
-app.use(express.json()); // Used to parse JSON bodies
+
+
+
+app.use(session({ 
+secret: process.env.SESSION_SECRET || 'defaultSecret', 
+resave: false, 
+saveUninitialized: false }));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+initialize(passport);
+
+app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
@@ -39,11 +55,11 @@ const setupExpress = () => {
   
 app.route("/").get(root);
 app.route("/login").get(Controller);
-app.route("/loginAccount").post(Controller);
-app.route("/loginAccount").get(Controller);
+app.route("/login").post(Controller);
+// app.route("/loginAccount").get(Controller);
 app.route("/set-new-password").get(Controller);
 app.route("/Users").get(Controller);
-app.route("/adminBoard").get(Controller);
+app.route("/admin").get(Controller);
 
 
 }

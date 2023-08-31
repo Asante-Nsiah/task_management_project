@@ -4,9 +4,7 @@ import { logger } from "../route/logger";
 import { Invitation } from "../modules/invitation-entity";
 import { Repository, createConnection, getRepository} from "typeorm";
 import nodemailer from "nodemailer";
-// import { authenticateUser } from "./authUser";
-// import { UserRepository } from "../repository/user-repository";
-// import { adminAuthMiddleware } from "./authUser";
+import passport from "passport";
 
 
 export  const loginRender = (request: Request, response: Response) => {
@@ -19,34 +17,9 @@ export  const loginRender = (request: Request, response: Response) => {
 };
 
 
-// async function getUserRepository(): Promise<UserRepository> {
-//   const connection = await connectDatabase;
-//   return connection.getRepository(UserRepository);
-// }
 
 
-export const loginAccount = async (request: Request, response: Response) => {
-  try {
-    const { email, password } = request.body;
 
-    if (email) {
-      if (email === 'admin@task.com') {
-        // Admin user is redirected to admin dashboard
-        response.redirect('/admin-board'); // Replace with your admin dashboard route
-        return;
-      } else {
-        // Regular user is redirected to user dashboard
-        response.redirect('/user-dashboard'); // Replace with your user dashboard route
-      }
-    } else {
-      // Handle unsuccessful login (show error message, etc.)
-      response.render('login', { error: 'Invalid credentials' });
-    }
-  } catch (error) {
-    logger.error('Error rendering login view:', error);
-    response.status(500).send('Internal Server Error');
-  }
-};
 
 
 
