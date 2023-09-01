@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction} from "express";
 import  {AppDataSource }  from "../route/data-source";
 import { logger } from "../route/logger";
 import { Invitation } from "../modules/invitation-entity";
@@ -31,6 +31,38 @@ export  const setPassword = (request: Request, response: Response) => {
         response.status(500).send('Internal Server Error');
     }
 };
+
+const revokedTokens: string[] = [];
+
+export const logout = (request: Request, response: Response) => {
+    
+  const token = request.headers.authorization; 
+
+  // Check if the token exists and is not already revoked
+  if (token && !revokedTokens.includes(token)) {
+    // Add the token to the list of revoked tokens
+    revokedTokens.push(token);
+  }
+
+  response.redirect('/login'); 
+}
+
+export const checkTokenValidity = ((req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization; // Example: assuming you're using JWT in headers
+
+  // Check if the token is revoked
+  if (token && revokedTokens.includes(token)) {
+    // Token is revoked; deny access (you can also send a 403 Forbidden status)
+    res.status(403).send('Access Denied');
+  } else {
+    // Token is valid; proceed with the request
+    next();
+  }
+});
+
+
+
+
 // export  const adminBoard = (request: Request, response: Response) => {
 //     try {
 //       adminAuthMiddleware(request, response, () => {
@@ -45,88 +77,85 @@ export  const setPassword = (request: Request, response: Response) => {
 
 
 
-// Generate a default password
-function generateRandomPassword(length: number): string {
-    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let defaultPassword = '';
+// // Generate a default password
+// function generateRandomPassword(length: number): string {
+//     const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//     let defaultPassword = '';
   
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length);
-      defaultPassword += charset[randomIndex];
-    }
+//     for (let i = 0; i < length; i++) {
+//       const randomIndex = Math.floor(Math.random() * charset.length);
+//       defaultPassword += charset[randomIndex];
+//     }
   
-    return defaultPassword;
-  }
+//     return defaultPassword;
+//   }
   
-  export const invite = async (request: Request, response: Response) => {
-    try {
-      const { email, full_name } = request.body;
-      const defaultPassword = generateRandomPassword(12);
+//   export const invite = async (request: Request, response: Response) => {
+//     try {
+//       const { email, full_name } = request.body;
+//       const defaultPassword = generateRandomPassword(12);
   
-      const invitation = new Invitation(email, full_name, defaultPassword);
-      invitation.email = email;
-      invitation.full_name = full_name;
-      invitation.defaultPassword = defaultPassword;
+//       const invitation = new Invitation(email, full_name, defaultPassword);
+//       invitation.email = email;
+//       invitation.full_name = full_name;
+//       invitation.defaultPassword = defaultPassword;
   
-      // Use AppDataSource for your TypeORM connection
-      // await AppDataSource.initialize();
+//       // Use AppDataSource for your TypeORM connection
+//       // await AppDataSource.initialize();
 
-      const invitationRepository: Repository<Invitation> = getRepository(Invitation);
-      await invitationRepository.save(invitation);
+//       const invitationRepository: Repository<Invitation> = getRepository(Invitation);
+//       await invitationRepository.save(invitation);
   
-      // Send email to the invited user using Nodemailer
-      const transporter = nodemailer.createTransport({
-        // pool: true,
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
-        auth: {
-          user:  "dca4a7f2c037d4",
-          pass: "ca037e584be699"
-        },
-        // tls: {
-        
-        //   rejectUnauthorized: false,
-        // },
-      });
+//       // Send email to the invited user using Nodemailer
+//       const transporter = nodemailer.createTransport({
+//         // pool: true,
+//         host: "sandbox.smtp.mailtrap.io",
+//         port: 2525,
+//         auth: {
+//           user:  "dca4a7f2c037d4",
+//           pass: "ca037e584be699"
+//         },
+       
+//       });
   
-      const mailOptions = {
-        from: "demoproject369@gmail.com",
-        to: email,
-        subject: "Invitation to Asante Task Management Board",
-        text: `Hello ${full_name},
+//       const mailOptions = {
+//         from: "demoproject369@gmail.com",
+//         to: email,
+//         subject: "Invitation to Asante Task Management Board",
+//         text: `Hello ${full_name},
 
-        You have been invited to our Asante Task Management Board platform.
+//         You have been invited to our Asante Task Management Board platform.
         
-        Login Credentials:
-        Email: ${email}
-        Temporary Password: ${defaultPassword}
+//         Login Credentials:
+//         Email: ${email}
+//         Temporary Password: ${defaultPassword}
         
-        Please use the following link to log in and access your account:
-        [Login Link]
+//         Please use the following link to log in and access your account:
+//         [Login Link]
         
-        Upon your first login, you will be required to set a new password for your account. This is to ensure the security of your account and your tasks.
+//         Upon your first login, you will be required to set a new password for your account. This is to ensure the security of your account and your tasks.
         
-        Please don't hesitate to contact us if you have any questions or need assistance.
+//         Please don't hesitate to contact us if you have any questions or need assistance.
         
-        Best regards,
-        The Asante Task Management Team`
-      };
+//         Best regards,
+//         The Asante Task Management Team`
+//       };
   
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          logger.error(error);
-          response.status(500).json({ message: "Error sending invitation email." });
-        } else {
-          console.log("Email sent: " + info.response);
-          response.status(201).json({ message: "Invitation sent successfully!" });
-        }
-      });
+//       transporter.sendMail(mailOptions, (error, info) => {
+//         if (error) {
+//           logger.error(error);
+//           response.status(500).json({ message: "Error sending invitation email." });
+//         } else {
+//           console.log("Email sent: " + info.response);
+//           response.status(201).json({ message: "Invitation sent successfully!" });
+//         }
+//       });
   
-      // await AppDataSource.destroy(); // Close the database connection
-    } catch (error) {
-      console.error(error);
-      response.status(500).json({ message: "Error sending invitation." });
-    }
-  };
+//       // await AppDataSource.destroy(); // Close the database connection
+//     } catch (error) {
+//       console.error(error);
+//       response.status(500).json({ message: "Error sending invitation." });
+//     }
+//   };
 
 

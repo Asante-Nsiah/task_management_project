@@ -21,6 +21,7 @@ import session from 'express-session';
 import passport from 'passport';
 import initialize   from "./config/passportConfig";
 import { Strategy as LocalStrategy } from 'passport-local';
+import { checkTokenValidity } from "./controller/authCtrl";
 
 
 const app = express();
@@ -48,7 +49,7 @@ app.use(express.static(path.join(__dirname, '..', 'dist', 'public')));
 app.use(express.static(path.join(__dirname, '..', 'dist')));
 app.use(express.static(path.join(__dirname, 'dist', 'modules')));
 app.use(Controller);
-
+app.use(checkTokenValidity);
 
 
 const setupExpress = () => {
@@ -60,7 +61,7 @@ app.route("/login").post(Controller);
 app.route("/set-new-password").get(Controller);
 app.route("/Users").get(Controller);
 app.route("/admin").get(Controller);
-
+app.route("/logout").post(Controller);
 
 }
 

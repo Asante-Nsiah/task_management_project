@@ -21,6 +21,7 @@ const routing_1 = require("./route/routing");
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
 const passportConfig_1 = __importDefault(require("./config/passportConfig"));
+const authCtrl_1 = require("./controller/authCtrl");
 const app = (0, express_1.default)();
 app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET || 'defaultSecret',
@@ -38,6 +39,7 @@ app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'dist', 'p
 app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'dist')));
 app.use(express_1.default.static(path_1.default.join(__dirname, 'dist', 'modules')));
 app.use(routing_1.Controller);
+app.use(authCtrl_1.checkTokenValidity);
 const setupExpress = () => {
     app.route("/").get(root_1.root);
     app.route("/login").get(routing_1.Controller);
@@ -46,6 +48,7 @@ const setupExpress = () => {
     app.route("/set-new-password").get(routing_1.Controller);
     app.route("/Users").get(routing_1.Controller);
     app.route("/admin").get(routing_1.Controller);
+    app.route("/logout").post(routing_1.Controller);
 };
 const startServer = () => {
     let port = 8000;
