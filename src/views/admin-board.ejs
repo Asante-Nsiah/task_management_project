@@ -8,8 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Admin Dashboard</h1>
+      <h1>Welcome to the Admin Dashboard</h1>
+      <p>Hello, Admin! You can use this dashboard to manage users.</p>
+
         <form action="/admin" method="post">
+          <div class="form-group">
+            <label for="full_name">New user's Full Name:</label>
+            <input type="text" id="full_name" name="full_name" required>
+          </div>
           <div class="form-group">
             <label for="email">User Email:</label>
             <input type="email" id="email" name="email" required>

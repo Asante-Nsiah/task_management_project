@@ -49,13 +49,13 @@ export default async  function authenticateUser(
 
       const {full_name, isAdmin} = user;
 
-      let redirectUrl = '/user-dashboard'; // Default to user dashboard
+      // Determine the view to render based on the user's email
+    let viewName = 'user-dashboard'; // Default to user dashboard
 
     if (email === 'admin@task123.com') {
-      // If user's email is "admin@task123.com", redirect to admin dashboard
-      redirectUrl = '/admin';
+      // If user's email is 'admin@task123.com', render the admin dashboard
+      viewName = 'admin-board';
     }
-
 
       const authJwt = {
         userId: user.id,
@@ -65,13 +65,13 @@ export default async  function authenticateUser(
 
       const authJwtToken = await jwt.sign(authJwt, JWT_SECRET);
 
-      response.status(200).json({
-        user:
-        email,
-        full_name,
-        isAdmin
-      })
-
+      // response.status(200).json({
+      //   user:
+      //   email,
+      //   full_name,
+      //   isAdmin
+      // })
+      response.render(viewName, { user });
     }
     catch(error){
       logger.error(`Error calling login()`);
