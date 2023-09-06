@@ -1,0 +1,93 @@
+body {
+    background-color: #f0f7ff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    background-color: #0074e4;
+    color: #fff;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar button {
+    background-color: #0053a0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sidebar button:hover {
+    background-color: #004187;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #0074e4;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Content area styles */
+.content {
+    margin-left: 270px; /* Adjust based on sidebar width */
+    padding: 20px;
+}
+
+/* Create Project form styles */
+.create-project-form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.create-project-form label {
+    font-weight: bold;
+}
+
+.create-project-form input[type="text"],
+.create-project-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.create-project-form button {
+    background-color: #0053a0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.create-project-form button:hover {
+    background-color: #004187;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User's Dashbaord/Create Project</title>
+    <link rel="stylesheet" href="/public/create-project.css">
+</head>
+<body>
+    <p>Welcome</p>
+    <div class="sidebar">
+        <h1>Main Dashboard</h1>
+        <ul>
+            <li><button id="myDashboardBtn"><a href="/user-dashboard">My Dashboard</a></button></li>
+            <li><button id="createProjectBtn">Create Project</button></li>
+            <li><button id="settingsBtn">Settings</button></li>
+            <form action="/logout" method="post">
+                <li><button type="submit" class="logout-button">Logout</button></li>
+              </form>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="navbar">
+            <span><%= userFullName %></span> <!-- Replace with the user's full name -->
+            <span><%= userEmail %></span> <!-- Replace with the user's email address -->
+        </div>
+
+        <!-- Create Project form -->
+        <div class="create-project-form">
+            <h2>Create New Project</h2>
+            <form id="projectForm">
+                <div class="form-group">
+                    <label for="projectName">Project Name:</label>
+                    <input type="text" id="projectName" name="projectName" required>
+                </div>
+                <div class="form-group">
+                    <label for="shortDescription">Short Description:</label>
+                    <textarea id="shortDescription" name="shortDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="collaborators">Collaborators:</label>
+                    <div class="collaborators" id="collaborators" contenteditable="true"></div>
+                </div>
+                <button type="submit">Create Project</button>
+            </form>
+        </div>
+    </div>
+    <form action="/logout" method="post">
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+</body>
+</html>

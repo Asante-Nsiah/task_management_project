@@ -1,5 +1,5 @@
 import express from 'express';
-import {  loginRender, logout, setPassword, userBoard } from '../controller/authCtrl';
+import {  createProject, loginRender, logout, setPassword, userBoard } from '../controller/authCtrl';
 import { } from '../seeders/admin';
 import { populateDb } from '../modules/populate-db';
 import { authenticate } from 'passport';
@@ -21,7 +21,8 @@ router.post('/Users', populateDb )
 router.post('/login', authenticateUser)
 router.post('/admin', sendInvitation)
 router.post('/logout', logout)
-router.get('/user-dashboard', checkIfAuthenticated, userBoard)
+router.get('/user-dashboard', userBoard)
+router.get('/create-project', createProject)
 
 
 export {router as Controller}

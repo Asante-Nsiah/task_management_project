@@ -4,10 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User's Dashbaord</title>
+    <link rel="stylesheet" href="/public/user-board.css">
 </head>
 <body>
     <p>Welcome</p>
+    <div class="sidebar">
+        <h1>Main Dashboard</h1>
+        <ul>
+            <li><button id="myDashboardBtn">My Dashboard</button></li>
+            <li><button id="createProjectBtn"><a href="/create-project">Create Project</a></button></li>
+            <li><button id="settingsBtn">Settings</button></li>
+            <form action="/logout" method="post">
+                <li><button type="submit" class="logout-button">Logout</button></li>
+              </form>
+        </ul>
+    </div>
 
+    <div class="content">
+        <div class="navbar">
+            <span><p>Welcome: </p><%= userFullName %></span> <br><!-- Replace with the user's full name -->
+            <span><%= userEmail %></span> <!-- Replace with the user's email address -->
+        </div>
+
+        <div class="dashboard-columns">
+            <!-- Default "My Dashboard" columns -->
+            <div class="dashboard-column">
+                <h2>TODO</h2>
+                <!-- Add your tasks for the TODO column here -->
+            </div>
+            <div class="dashboard-column">
+                <h2>IN PROGRESS</h2>
+                <!-- Add your tasks for the IN PROGRESS column here -->
+            </div>
+            <div class="dashboard-column">
+                <h2>COMPLETED</h2>
+                <!-- Add your tasks for the COMPLETED column here -->
+            </div>
+        </div>
+    </div>
     <form action="/logout" method="post">
         <button type="submit" class="logout-button">Logout</button>
       </form>

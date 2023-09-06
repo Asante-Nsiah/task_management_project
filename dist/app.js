@@ -53,6 +53,7 @@ const setupExpress = () => {
     app.route("/admin").get(routing_1.Controller);
     app.route("/logout").post(routing_1.Controller);
     app.route("/user-dashboard").get(routing_1.Controller);
+    app.route("/create-project").get(routing_1.Controller);
 };
 const startServer = () => {
     let port = 8000;

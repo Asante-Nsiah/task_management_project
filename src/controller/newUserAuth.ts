@@ -43,6 +43,10 @@ export default async  function authenticateNewUser(
 
       const isPasswordCorrect = await bcrypt.compare(passwordCompare, storedHashedDefaultPassword);
       let viewName: string;
+      let userEmail;
+      let userFullName;
+
+      const {full_name, isAdmin} = user;
 
 if (isPasswordCorrect) {
   // Passwords match, redirect the user to set a new password
@@ -53,11 +57,12 @@ if (isPasswordCorrect) {
 } else {
   // For all other users, set the viewName to 'user-board'
   viewName = 'user-board';
-
+  userEmail = email; // Set email for the user
+  userFullName = full_name; // Set full_name for the user
   
 }
 
-response.render(viewName, { user });
+response.render(viewName, { userEmail, userFullName });
 
       // if (!isPasswordCorrect){
       //   const message = `Login denied.`;
@@ -68,7 +73,7 @@ response.render(viewName, { user });
 
       logger.info(`User ${email} has now logged in.`);
 
-      const {full_name, isAdmin} = user;
+      
 
     
 
