@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { logger } from '../route/logger';
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import nodemailer from "nodemailer";
 import { Invitation } from '../modules/invitation-entity';
-
+import { AppDataSource } from '../route/data-source';
+import { Users } from '../modules/user-entity';
+import bcrypt from 'bcrypt';
 
 
    // Generate a default password
@@ -19,19 +21,26 @@ import { Invitation } from '../modules/invitation-entity';
     return defaultPassword;
   }
 
+  const defaultPasswordUser = generateRandomPassword(12);
 
-  export async function sendInvitation(request: Request, response: Response) {
+  export default async function sendInvitation(request: Request, response: Response) {
     try {
 
-      const { email, fullName } = request.body;
+      const { email, full_name } = request.body;
+        console.log(`Full name:` , request.body.full_name, request.body.email);
 
-      const defaultPasswordUser = generateRandomPassword(12);
+        if (!request.body.full_name) {
+            return response.status(400).json({ error: 'Full name is required' });
+          }
+      // const defaultPasswordUser = generateRandomPassword(12);
   
-      // Save the invitation to the database
-    const invitationRepository = getRepository(Invitation);
-    const invitation = new Invitation(email, fullName, defaultPasswordUser);
+    
+    const connection = AppDataSource;
+    const invitationRepository = connection.getRepository(Users);
+    const password = await bcrypt.hash(defaultPasswordUser, 10);
+    const invitation = new Invitation(email, full_name, password);
     await invitationRepository.save(invitation);
-  
+    console.log(invitation);
       
       // Send email to the invited user using Nodemailer
       const transporter = nodemailer.createTransport({
@@ -44,12 +53,12 @@ import { Invitation } from '../modules/invitation-entity';
         },
        
       });
-  
+      let login = 'http://localhost:8000/login';
       const mailOptions = {
         from: "demoproject369@gmail.com",
         to: email,
         subject: "Invitation to Asante Task Management Board",
-        text: `Hello ${fullName},
+        text: `Hello ${full_name},
 
         You have been invited to our Asante Task Management Board platform.
         
@@ -58,7 +67,7 @@ import { Invitation } from '../modules/invitation-entity';
         Temporary Password: ${defaultPasswordUser}
         
         Please use the following link to log in and access your account:
-        [Login Link]
+        ${login}
         
         Upon your first login, you will be required to set a new password for your account. This is to ensure the security of your account and your tasks.
         
@@ -85,4 +94,4 @@ import { Invitation } from '../modules/invitation-entity';
     }
   }
   
-//   export default { sendInvitation };
+ 

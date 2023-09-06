@@ -3,6 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 @Entity()
 @Unique(['email'])
 export class Users {
+    defaultPasswordUser: any;
+    tempPassword: any;
     static id(arg0: null, id: any) {
       throw new Error("Method not implemented.");
     }
@@ -19,7 +21,7 @@ export class Users {
     isAdmin: boolean;
 
     @Column({ length: 255 })
-    password: string
+    password: string;
     projects: any;
     userProjects: any;
     assignedTasks: any;

@@ -19,6 +19,7 @@ const data_source_1 = require("./route/data-source");
 const path_1 = __importDefault(require("path"));
 const routing_1 = require("./route/routing");
 const express_session_1 = __importDefault(require("express-session"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const passport_1 = __importDefault(require("passport"));
 const passportConfig_1 = __importDefault(require("./config/passportConfig"));
 const authCtrl_1 = require("./controller/authCtrl");
@@ -31,6 +32,8 @@ app.use((0, express_session_1.default)({
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
 (0, passportConfig_1.default)(passport_1.default);
+app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
@@ -49,6 +52,7 @@ const setupExpress = () => {
     app.route("/Users").get(routing_1.Controller);
     app.route("/admin").get(routing_1.Controller);
     app.route("/logout").post(routing_1.Controller);
+    app.route("/user-dashboard").get(routing_1.Controller);
 };
 const startServer = () => {
     let port = 8000;

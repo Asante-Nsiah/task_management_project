@@ -1,10 +1,15 @@
 
 import { EntityRepository, Repository } from "typeorm";
 import { Users } from "../modules/user-entity";
-
+import bcrypt from 'bcrypt';
 
 @EntityRepository(Users)
 export class UsersRepository extends Repository<Users> {
+    static save // Find the user by email
+        (user: Users) {
+            throw new Error('Method not implemented.');
+    }
+    static updatePassword: any;
     static findOne(arg0: { where: { email: string; }; }) {
         throw new Error("Method not implemented.");
     }
@@ -37,5 +42,22 @@ export class UsersRepository extends Repository<Users> {
           throw error;
         }
       }
+
+      async updatePassword(email: string, newPassword: string): Promise<void> {
+        // Find the user by email
+        const user = await this.findOne({ where: { email } });
+    
+        if (!user) {
+          throw new Error('User not found');
+        }
+    
+        // Update the user's password with the new hashed password
+        user.password = newPassword;
+    
+        // Save the updated user entity
+        await this.save(user);
+      }
+
+    
 }
 

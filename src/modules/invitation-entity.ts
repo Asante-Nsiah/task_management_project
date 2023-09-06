@@ -10,16 +10,16 @@ export class Invitation {
   email: string;
 
   @Column({ name: 'full_name', length: 255 })
-  fullName: string;
+  full_name: string;
 
-  @Column({ name: 'defaultPassword', length: 255 })
-  defaultPassword: string;
-    full_name: any;
+  @Column({ name: 'password', length: 255 })
+  password: string;
+    full_Name: any;
 
-  constructor(email: string, fullName: string, defaultPassword: string) {
+  constructor(email: string, full_name: string, password: string) {
     
     this.email = email;
-    this.fullName = fullName;
-    this.defaultPassword = defaultPassword;
+    this.full_name = full_name;
+    this.password = password;
   }
 }

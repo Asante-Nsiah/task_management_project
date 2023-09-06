@@ -18,6 +18,7 @@ import { AppDataSource } from "./route/data-source";
 import path from 'path';
 import { Controller } from './route/routing';
 import session from 'express-session';
+import bodyParser from 'body-parser';
 import passport from 'passport';
 import initialize   from "./config/passportConfig";
 import { Strategy as LocalStrategy } from 'passport-local';
@@ -40,6 +41,8 @@ app.use(passport.session());
 
 initialize(passport);
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
@@ -62,7 +65,7 @@ app.route("/set-new-password").get(Controller);
 app.route("/Users").get(Controller);
 app.route("/admin").get(Controller);
 app.route("/logout").post(Controller);
-
+app.route("/user-dashboard").get(Controller);
 }
 
 
