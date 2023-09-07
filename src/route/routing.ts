@@ -1,5 +1,5 @@
 import express from 'express';
-import {  createProject, loginRender, logout, setPassword, userBoard } from '../controller/authCtrl';
+import { loginRender, logout, setPassword} from '../controller/authCtrl';
 import { } from '../seeders/admin';
 import { populateDb } from '../modules/populate-db';
 import { authenticate } from 'passport';
@@ -9,7 +9,9 @@ import { checkIfAdmin } from '../controller/authCheckAdmin';
 import sendInvitation from '../controller/adminInviteUsers';
 import newUser from '../controller/newUserAuth';
 import { setActualPassword } from '../controller/setPassword';
-
+import { userBoard } from '../controller/userBoard';
+import { createProject } from '../controller/createProject';
+import { collaborators } from '../controller/collaborators';
 
 const router = express.Router();
 
@@ -21,8 +23,9 @@ router.post('/Users', populateDb )
 router.post('/login', authenticateUser)
 router.post('/admin', sendInvitation)
 router.post('/logout', logout)
-router.get('/user-dashboard', userBoard)
-router.get('/create-project', createProject)
+router.get('/user-dashboard',checkIfAuthenticated, userBoard)
+router.get('/user-dashboard/create-project',  createProject)
+router.post('/user-dashboard/create-project/add',  collaborators)
 
 
 export {router as Controller}

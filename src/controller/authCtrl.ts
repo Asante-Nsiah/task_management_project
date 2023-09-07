@@ -5,6 +5,8 @@ import { Invitation } from "../modules/invitation-entity";
 import { Repository, createConnection, getRepository} from "typeorm";
 import nodemailer from "nodemailer";
 import passport from "passport";
+import { Users } from "../modules/user-entity";
+
 
 
 export  const loginRender = (request: Request, response: Response) => {
@@ -15,28 +17,8 @@ export  const loginRender = (request: Request, response: Response) => {
         response.status(500).send('Internal Server Error');
     }
 };
-export  const userBoard = (request: Request, response: Response) => {
-    try {
-      const {full_name, email} = request.body;
-      let userFullName = full_name;
-      let userEmail = email;
-        response.render("user-board", {userFullName, userEmail});
-    } catch (error) {
-        logger.error('Error rendering User board view:', error);
-        response.status(500).send('Internal Server Error');
-    }
-};
-export  const createProject = (request: Request, response: Response) => {
-    try {
-        const {full_name, email} = request.body;
-      let userFullName = full_name;
-      let userEmail = email;
-        response.render("create-project", {userFullName, userEmail});
-    } catch (error) {
-        logger.error('Error rendering create project view:', error);
-        response.status(500).send('Internal Server Error');
-    }
-};
+
+
 
 
 export  const setPassword = (request: Request, response: Response) => {

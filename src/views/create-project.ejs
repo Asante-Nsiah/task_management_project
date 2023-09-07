@@ -38,12 +38,31 @@
                     <label for="shortDescription">Short Description:</label>
                     <textarea id="shortDescription" name="shortDescription" rows="4" required></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="collaborators">Collaborators:</label>
-                    <div class="collaborators" id="collaborators" contenteditable="true"></div>
-                </div>
+                
                 <button type="submit">Create Project</button>
             </form>
+
+            <div class="form-group">
+                <h1>Add Collaborators</h1>
+                <form action="/user-dashboard/create-project/add" method="POST">
+                    <label for="collaboratorEmail">Collaborator Email:</label>
+                    <input type="email" id="collaboratorEmail" name="collaboratorEmail" required>
+                    <button type="submit">Add Collaborator</button>
+                </form>
+                <h2>Collaborators List:</h2>
+                     <ul>
+                        <!-- Display the collaborators dynamically here -->
+                        <% if (collaboratorsArray.length > 0) { %>
+                            <% collaboratorsArray.forEach((collaborator) => { %>
+                                <li><%= collaborator.full_name %> - <%= collaborator.email %></li>
+                            <% }); %>
+                        <% } else { %>
+                            <li>No collaborators added yet.</li>
+                        <% } %>
+                     </ul>
+
+
+            </div>
         </div>
     </div>
     <form action="/logout" method="post">

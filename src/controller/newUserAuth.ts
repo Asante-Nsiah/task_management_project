@@ -73,10 +73,6 @@ response.render(viewName, { userEmail, userFullName });
 
       logger.info(`User ${email} has now logged in.`);
 
-      
-
-    
-
       const authJwt = {
         userId: user.id,
         email,

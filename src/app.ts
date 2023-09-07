@@ -66,7 +66,8 @@ app.route("/Users").get(Controller);
 app.route("/admin").get(Controller);
 app.route("/logout").post(Controller);
 app.route("/user-dashboard").get(Controller);
-app.route("/create-project").get(Controller);
+app.route("/user-dashboard/create-project").get(Controller);
+app.route("/user-dashboard/create-project/add").post(Controller);
 }
 
 
