@@ -23,7 +23,18 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const passport_1 = __importDefault(require("passport"));
 const passportConfig_1 = __importDefault(require("./config/passportConfig"));
 const authCtrl_1 = require("./controller/authCtrl");
+const http_1 = __importDefault(require("http"));
+const socket_io_1 = require("socket.io");
 const app = (0, express_1.default)();
+const server = http_1.default.createServer(app);
+const io = new socket_io_1.Server(server);
+io.on('connection', (socket) => {
+    console.log('A user connected');
+    // Handle socket events here
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
+    });
+});
 app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET || 'defaultSecret',
     resave: false,
@@ -53,8 +64,11 @@ const setupExpress = () => {
     app.route("/admin").get(routing_1.Controller);
     app.route("/logout").post(routing_1.Controller);
     app.route("/user-dashboard").get(routing_1.Controller);
-    app.route("/user-dashboard/create-project").get(routing_1.Controller);
-    app.route("/user-dashboard/create-project/add").post(routing_1.Controller);
+    app.route("/create-project").get(routing_1.Controller);
+    app.route("/create-project/new").post(routing_1.Controller);
+    app.route("/create-project/add").post(routing_1.Controller);
+    // app.route("/user-dashboard").get(Controller);
+    app.route("/project-board").get(routing_1.Controller);
 };
 const startServer = () => {
     let port = 8000;

@@ -23,9 +23,24 @@ import passport from 'passport';
 import initialize   from "./config/passportConfig";
 import { Strategy as LocalStrategy } from 'passport-local';
 import { checkTokenValidity } from "./controller/authCtrl";
+import http from 'http';
+import { Server } from 'socket.io';
 
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Handle socket events here
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
 
 
 
@@ -66,8 +81,11 @@ app.route("/Users").get(Controller);
 app.route("/admin").get(Controller);
 app.route("/logout").post(Controller);
 app.route("/user-dashboard").get(Controller);
-app.route("/user-dashboard/create-project").get(Controller);
-app.route("/user-dashboard/create-project/add").post(Controller);
+app.route("/create-project").get(Controller);
+app.route("/create-project/new").post(Controller);
+app.route("/create-project/add").post(Controller);
+// app.route("/user-dashboard").get(Controller);
+app.route("/project-board").get(Controller);
 }
 
 

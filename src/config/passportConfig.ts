@@ -4,6 +4,10 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { EntityManager, getRepository } from 'typeorm';
 import { Users } from "../modules/user-entity";
 import bcrypt from 'bcrypt';
+import configureJwt from "./jwtConfig";
+
+
+
 
 
 export default function initialize(passport: any) {
@@ -34,6 +38,8 @@ export default function initialize(passport: any) {
   passport.use(
     new LocalStrategy({ usernameField: "email", passwordField: "password" }, authenticateUser)
   );
+
+  configureJwt(passport);
 
   passport.serializeUser((user: any, done: any) => done(null, user.id));
   passport.deserializeUser((id: number, done: any) => {

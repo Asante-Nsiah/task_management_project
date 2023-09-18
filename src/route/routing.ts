@@ -10,8 +10,10 @@ import sendInvitation from '../controller/adminInviteUsers';
 import newUser from '../controller/newUserAuth';
 import { setActualPassword } from '../controller/setPassword';
 import { userBoard } from '../controller/userBoard';
-import { createProject } from '../controller/createProject';
+import { createProject, displayCreateProject } from '../controller/createProject';
 import { collaborators } from '../controller/collaborators';
+import { projectBoard } from '../controller/projectBoard';
+import authenticateNewUser from '../controller/newUserAuth';
 
 const router = express.Router();
 
@@ -23,9 +25,15 @@ router.post('/Users', populateDb )
 router.post('/login', authenticateUser)
 router.post('/admin', sendInvitation)
 router.post('/logout', logout)
-router.get('/user-dashboard',checkIfAuthenticated, userBoard)
-router.get('/user-dashboard/create-project',  createProject)
-router.post('/user-dashboard/create-project/add',  collaborators)
+// router.use('/user-dashboard', checkIfAuthenticated);
+router.get('/user-dashboard', userBoard)
+// router.get('/user-dashboard', userBoard)
+router.get('/create-project', checkIfAuthenticated, authenticateUser, displayCreateProject)
+router.post('/create-project/new',  createProject)
 
+router.post('/create-project/add', collaborators)
+// router.get('/user-dashboard', collaborators)
+
+router.get('/project-board', projectBoard)
 
 export {router as Controller}

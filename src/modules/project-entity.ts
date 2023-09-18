@@ -3,6 +3,7 @@ import { Users } from './user-entity';
 
 @Entity()
 export class Project {
+    [x: string]: any;
     @PrimaryGeneratedColumn()
     id!: number;
 
@@ -19,4 +20,5 @@ export class Project {
     kanbanColumns: any;
     usersProjects: any;
     usersProject: any;
+    project: any;
 }

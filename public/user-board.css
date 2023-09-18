@@ -48,6 +48,7 @@ body {
     background-color: #0074e4;
     color: #fff;
     padding: 10px;
+    display: flex;
 }
 
 /* Content area styles */
@@ -56,7 +57,69 @@ body {
     padding: 20px;
 }
 
-/* My Dashboard columns styles (TODO, IN PROGRESS, COMPLETED) */
+/* Create Project form styles */
+.create-project-form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.create-project-form label {
+    font-weight: bold;
+}
+
+.create-project-form input[type="text"],
+.create-project-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.create-project-form button {
+    background-color: #0053a0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.create-project-form button:hover {
+    background-color: #004187;
+}
+/* Styles for the project buttons */
+.project-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.project-button {
+    background-color: #0074cc; /* Primary blue color for buttons */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.project-button:hover {
+    background-color: #005aa6; /* Darker blue color on hover */
+}
+
+/* Styles for the button click event */
+.project-button:focus {
+    outline: none; /* Remove default focus outline */
+}
+
 .dashboard-columns {
     display: flex;
     justify-content: space-between;
@@ -69,6 +132,7 @@ body {
     border-radius: 5px;
     padding: 20px;
     margin-right: 20px;
+    height: 400px;
 }
 
 .dashboard-column h2 {

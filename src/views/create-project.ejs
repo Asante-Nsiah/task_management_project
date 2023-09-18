@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User's Dashbaord/Create Project</title>
+    <title>Document</title>
     <link rel="stylesheet" href="/public/create-project.css">
 </head>
 <body>
     <p>Welcome</p>
     <div class="sidebar">
         <h1>Main Dashboard</h1>
+        <p>
+            <span>Welcome: <%= userFullName %></span>
+            <span>||</span>
+            <span><%= userEmail %></span>
+        </p>
         <ul>
-            <li><button id="myDashboardBtn"><a href="/user-dashboard">My Dashboard</a></button></li>
-            <li><button id="createProjectBtn">Create Project</button></li>
+            <li><a href="/user-dashboard?authenticated=true"><button id="myDashboardBtn">My Dashboard</button></a></li>
+            <li> <a href="/create-project?authenticated=true"><button id="createProjectBtn">Create Project</button></a></li>
+            <li> <a href="/project-board?authenticated=true"><button id="ProjectBtn">Project</button></a></li>
             <li><button id="settingsBtn">Settings</button></li>
             <form action="/logout" method="post">
                 <li><button type="submit" class="logout-button">Logout</button></li>
@@ -20,53 +26,54 @@
         </ul>
     </div>
 
-    <div class="content">
-        <div class="navbar">
-            <span><%= userFullName %></span> <!-- Replace with the user's full name -->
-            <span><%= userEmail %></span> <!-- Replace with the user's email address -->
-        </div>
-
-        <!-- Create Project form -->
-        <div class="create-project-form">
-            <h2>Create New Project</h2>
-            <form id="projectForm">
-                <div class="form-group">
-                    <label for="projectName">Project Name:</label>
-                    <input type="text" id="projectName" name="projectName" required>
-                </div>
-                <div class="form-group">
-                    <label for="shortDescription">Short Description:</label>
-                    <textarea id="shortDescription" name="shortDescription" rows="4" required></textarea>
-                </div>
+    
+        <div class="content">
+            <div class="navbar">
+                <p>
+                    <span>Welcome: <%= userFullName %></span>
+                    <span>||</span>
+                    <span><%= userEmail %></span>
+                </p>
                 
-                <button type="submit">Create Project</button>
-            </form>
-
-            <div class="form-group">
-                <h1>Add Collaborators</h1>
-                <form action="/user-dashboard/create-project/add" method="POST">
-                    <label for="collaboratorEmail">Collaborator Email:</label>
-                    <input type="email" id="collaboratorEmail" name="collaboratorEmail" required>
-                    <button type="submit">Add Collaborator</button>
+            </div>
+    
+            <!-- Create Project form -->
+            <div class="create-project-form">
+                <h2>Create New Project</h2>
+                <form id="projectForm" action="/create-project/new" method="post">
+                    <div class="form-group">
+                        <label for="projectName">Project Name:</label>
+                        <input type="text" id="projectName" name="projectName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shortDescription">Short Description:</label>
+                        <textarea id="shortDescription" name="shortDescription" rows="4" required></textarea>
+                    </div>
+                    <button type="submit">Create Project</button>
                 </form>
-                <h2>Collaborators List:</h2>
-                     <ul>
+    
+                <div class="form-group">
+                    <h1>Add Collaborators</h1>
+                    <form action="/create-project/add" method="POST">
+                        <label for="collaboratorEmail">Collaborator Email:</label>
+                        <input type="email" id="collaboratorEmail" name="collaboratorEmail" required>
+                        <button type="submit">Add Collaborator</button>
+                    </form>
+                    <h2>Collaborators List:</h2>
+                    <ul>
                         <!-- Display the collaborators dynamically here -->
                         <% if (collaboratorsArray.length > 0) { %>
                             <% collaboratorsArray.forEach((collaborator) => { %>
                                 <li><%= collaborator.full_name %> - <%= collaborator.email %></li>
                             <% }); %>
-                        <% } else { %>
+                        <%} else { %>
                             <li>No collaborators added yet.</li>
                         <% } %>
-                     </ul>
-
-
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <form action="/logout" method="post">
-        <button type="submit" class="logout-button">Logout</button>
-      </form>
+        
+    
 </body>
 </html>
