@@ -28,7 +28,7 @@ router.post('/logout', logout)
 // router.use('/user-dashboard', checkIfAuthenticated);
 router.get('/user-dashboard', userBoard)
 // router.get('/user-dashboard', userBoard)
-router.get('/create-project', checkIfAuthenticated, authenticateUser, displayCreateProject)
+router.get('/create-project', checkIfAuthenticated, displayCreateProject)
 router.post('/create-project/new',  createProject)
 
 router.post('/create-project/add', collaborators)
