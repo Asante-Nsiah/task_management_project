@@ -23,22 +23,15 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const passport_1 = __importDefault(require("passport"));
 const passportConfig_1 = __importDefault(require("./config/passportConfig"));
 const authCtrl_1 = require("./controller/authCtrl");
-const http_1 = __importDefault(require("http"));
-const socket_io_1 = require("socket.io");
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
-const server = http_1.default.createServer(app);
-const io = new socket_io_1.Server(server);
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    // Handle socket events here
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
-});
 app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET || 'defaultSecret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true,
+    cookie: {
+        secure: false, // Set to true in production with HTTPS
+    },
 }));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
@@ -54,6 +47,8 @@ app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'dist')));
 app.use(express_1.default.static(path_1.default.join(__dirname, 'dist', 'modules')));
 app.use(routing_1.Controller);
 app.use(authCtrl_1.checkTokenValidity);
+// Initialize cookie-parser middleware
+app.use((0, cookie_parser_1.default)());
 const setupExpress = () => {
     app.route("/").get(root_1.root);
     app.route("/login").get(routing_1.Controller);
@@ -69,6 +64,9 @@ const setupExpress = () => {
     app.route("/create-project/add").post(routing_1.Controller);
     // app.route("/user-dashboard").get(Controller);
     app.route("/project-board").get(routing_1.Controller);
+    app.route("/create-task").get(routing_1.Controller);
+    app.route("/create-task").post(routing_1.Controller);
+    app.route("/create-task/add-assignee").post(routing_1.Controller);
 };
 const startServer = () => {
     let port = 8000;

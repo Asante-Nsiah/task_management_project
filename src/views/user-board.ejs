@@ -19,6 +19,7 @@
             <li><a href="/user-dashboard?authenticated=true"><button id="myDashboardBtn">My Dashboard</button></a></li>
             <li> <a href="/create-project?authenticated=true"><button id="createProjectBtn">Create Project</button></a></li>
             <li> <a href="/project-board?authenticated=true"><button id="ProjectBtn">Project</button></a></li>
+            <li> <a href="/create-task?authenticated=true"><button id="createTaskBtn">Task</button></a></li>
             <li><button id="settingsBtn">Settings</button></li>
             <form action="/logout" method="post">
                 <li><button type="submit" class="logout-button">Logout</button></li>
@@ -54,58 +55,7 @@
             </div>
             <!-- </section> -->
             
-        <!-- <section id="section-two"> -->
-           
-            <!-- <div class="dashboard-columns"> -->
-                <!-- Default "My Dashboard" columns -->
-                <!-- <div class="dashboard-column">
-                    <h2>TODO</h2> -->
-                    <!-- Add your tasks for the TODO column here -->
-                <!-- </div>
-                <div class="dashboard-column">
-                    <h2>IN PROGRESS</h2> -->
-                    <!-- Add your tasks for the IN PROGRESS column here -->
-                <!-- </div>
-                <div class="dashboard-column">
-                    <h2>COMPLETED</h2> -->
-                    <!-- Add your tasks for the COMPLETED column here -->
-                <!-- </div> 
-        </section> -->
-
-        <!-- <section id="section-three"> -->
-            <!-- Create Project form -->
-            <!-- <div class="create-project-form">
-                <h2>Create New Project</h2> -->
-                <!-- <form id="projectForm">
-                    <div class="form-group">
-                        <label for="projectName">Project Name:</label>
-                        <input type="text" id="projectName" name="projectName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="shortDescription">Short Description:</label>
-                        <textarea id="shortDescription" name="shortDescription" rows="4" required></textarea>
-                    </div>
-                    <button type="submit">Create Project</button>
-                </form>
-    
-                <div class="form-group">
-                    <h1>Add Collaborators</h1>
-                    <form action="/user-dashboard" method="POST">
-                        <label for="collaboratorEmail">Collaborator Email:</label>
-                        <input type="email" id="collaboratorEmail" name="collaboratorEmail" required>
-                        <button type="submit">Add Collaborator</button>
-                    </form> -->
-                    <!-- <h2>Collaborators List:</h2> -->
-                    <ul>
-                        <!-- Display the collaborators dynamically here -->
-                        <%// if (typeof collaboratorsArray !== 'undefined' && collaboratorsArray.length > 0) { %>
-                            <%// collaboratorsArray.forEach((collaborator) => { %>
-                                <li><%=// collaborator.full_name %> - <%=// collaborator.email %></li>
-                            <% //}); %>
-                        <%// } else { %>
-                            <!-- <li>No collaborators added yet.</li> -->
-                        <%// } %>
-                    </ul>
+        
                 </div>
             </div>
         </section>
