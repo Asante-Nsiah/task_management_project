@@ -4,10 +4,15 @@ import { logger } from "../route/logger";
 import { AppDataSource } from "../route/data-source";
 import { Users } from "../modules/user-entity";
 import bcrypt from "bcrypt";
-
+import { verifyToken } from "./verifyToken";
+import cookieParser from "cookie-parser";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
+
+// Initialize cookie-parser middleware
+
+
 
 export default async  function authenticateUser(
   request: Request, response: Response, next: NextFunction) {
@@ -57,22 +62,26 @@ export default async  function authenticateUser(
       viewName = 'admin-board';
     }
 
-      const authJwt = {
-        userId: user.id,
-        email,
-        isAdmin
-      };
+      // Store user details in the session
+    request.session.user = {
+      userId: `${user.id}`,
+      email,
+      // isAdmin,
+      full_name
+    };
 
-      const authJwtToken = await jwt.sign(authJwt, JWT_SECRET);
-      console.log(authJwtToken);
+      // const authJwtToken = await jwt.sign(authJwt, JWT_SECRET);
+      // console.log(authJwtToken);
+      // response.cookie('jwtToken', authJwtToken, { httpOnly: true });
 
-      request.headers.authorization = `Bearer ${authJwtToken}`;
-      // response.status(200).json({
-      //   user:
-      //   email,
-      //   full_name,
-      //   isAdmin
-      // })
+
+      // request.headers.authorization = `Bearer ${authJwtToken}`;
+
+      await verifyToken(request, response, async () => {
+        // Render the view after successful token verification
+        response.render(viewName, { user });
+      });
+      
       response.render(viewName, { user });
     }
     catch(error){

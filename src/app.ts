@@ -25,21 +25,10 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { checkTokenValidity } from "./controller/authCtrl";
 import http from 'http';
 import { Server } from 'socket.io';
-
+import cookieParser from "cookie-parser";
+import expressSession from 'express-session';
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  // Handle socket events here
-
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-});
 
 
 
@@ -48,7 +37,11 @@ io.on('connection', (socket) => {
 app.use(session({ 
 secret: process.env.SESSION_SECRET || 'defaultSecret', 
 resave: false, 
-saveUninitialized: false }));
+saveUninitialized: true,
+cookie: {
+  secure: false, // Set to true in production with HTTPS
+},
+}));
 
 
 app.use(passport.initialize());
@@ -68,7 +61,8 @@ app.use(express.static(path.join(__dirname, '..', 'dist')));
 app.use(express.static(path.join(__dirname, 'dist', 'modules')));
 app.use(Controller);
 app.use(checkTokenValidity);
-
+// Initialize cookie-parser middleware
+app.use(cookieParser());
 
 const setupExpress = () => {
   
@@ -86,6 +80,10 @@ app.route("/create-project/new").post(Controller);
 app.route("/create-project/add").post(Controller);
 // app.route("/user-dashboard").get(Controller);
 app.route("/project-board").get(Controller);
+app.route("/create-task").get(Controller);
+app.route("/create-task").post(Controller);
+app.route("/create-task/add-assignee").post(Controller);
+
 }
 
 

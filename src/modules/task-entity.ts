@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Users } from './user-entity'; // Assuming this is the file where the User entity is defined
-import { KanbanColumn } from './kanban-entity'; // Assuming this is the file where the KanbanColumn entity is defined
+import { Users } from './user-entity'; 
+import { KanbanColumn } from './kanban-entity'; 
 
 @Entity()
 export class Task {

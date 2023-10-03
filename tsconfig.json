@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-      "target": "ES6", // or "es2020" or any other version you prefer
+      "target": "ES6", 
       "module": "commonjs",
       "outDir": "./dist",
+      "types": ["express-session", /* other types */],
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "rootDir": "./src",
@@ -10,7 +11,7 @@
       "esModuleInterop": true,
       "sourceMap": true
     },
-    "include": ["src/**/*.ts", "custom.d.ts"],
+    "include": ["src/**/*.ts", "custom.d.ts", "express.d.ts"],
     "exclude": ["node_modules", "dist"]
   }
   

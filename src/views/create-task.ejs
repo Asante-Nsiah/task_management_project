@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task</title>
+    <link rel="stylesheet" href="/public/create-task.css">
+</head>
+<body>
+    <ul>
+        <li><a href="/user-dashboard?authenticated=true"><button id="myDashboardBtn">My Dashboard</button></a></li>
+        <li> <a href="/create-project?authenticated=true"><button id="createProjectBtn">Create Project</button></a></li>
+        <li> <a href="/project-board?authenticated=true"><button id="ProjectBtn">Project</button></a></li>
+        <li> <a href="/create-task?authenticated=true"><button id="createTaskBtn">Task</button></a></li>
+        <li><button id="settingsBtn">Settings</button></li>
+        <form action="/logout" method="post">
+            <li><button type="submit" class="logout-button">Logout</button></li>
+          </form>
+    </ul>
+
+    <h1>Create Task</h1>
+    <form action="/create-task" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br><br>
+        <label for="deadline">Deadline:</label>
+        <input type="date" id="deadline" name="deadline"><br><br>
+        <button type="submit">Create Task</button>
+      </form>
+      <div class="form-group">
+        <h1>Add Assignee</h1>
+        <form action="/create-task/add-assignee" method="POST">
+          <label for="assigneeEmail">Assignee Email:</label>
+          <input type="text" id="assignee" name="assignees" required>
+          <button type="submit">Add Assignee</button>
+        </form>
+        <h2>Assignee List:</h2>
+        <ul>
+          <!-- Display the assignees dynamically here -->
+          <% if (assigneesArray && assigneesArray.length > 0) { %>
+            <% assigneesArray.forEach((assignee) => { %>
+              <li><%= assignee.full_name %> - <%= assignee.email %></li>
+            <% }); %>
+          <%} else { %>
+            <li>No assignees added yet.</li>
+          <% } %>
+        </ul>
+      </div>
+
+</body>
+</html>

@@ -14,6 +14,8 @@ import { createProject, displayCreateProject } from '../controller/createProject
 import { collaborators } from '../controller/collaborators';
 import { projectBoard } from '../controller/projectBoard';
 import authenticateNewUser from '../controller/newUserAuth';
+import { addAssignee, createTask, createTaskDisplay } from '../controller/createTask';
+import { verifyToken } from '../controller/verifyToken';
 
 const router = express.Router();
 
@@ -28,12 +30,12 @@ router.post('/logout', logout)
 // router.use('/user-dashboard', checkIfAuthenticated);
 router.get('/user-dashboard', userBoard)
 // router.get('/user-dashboard', userBoard)
-router.get('/create-project', checkIfAuthenticated, authenticateUser, displayCreateProject)
+router.get('/create-project', displayCreateProject)
 router.post('/create-project/new',  createProject)
-
 router.post('/create-project/add', collaborators)
-// router.get('/user-dashboard', collaborators)
-
 router.get('/project-board', projectBoard)
+router.get('/create-task', createTaskDisplay)
+router.post('/create-task',createTask)
+router.post('/create-task/add-assignee', addAssignee)
 
 export {router as Controller}
