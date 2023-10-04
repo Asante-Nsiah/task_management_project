@@ -28,22 +28,19 @@ export  const setPassword = (request: Request, response: Response) => {
         logger.error('Error rendering setPassword view:', error);
         response.status(500).send('Internal Server Error');
     }
-};
 
+  }
 const revokedTokens: string[] = [];
 
 export const logout = (request: Request, response: Response) => {
-    
-  const token = request.headers.authorization; 
-
-  // Check if the token exists and is not already revoked
-  if (token && !revokedTokens.includes(token)) {
-    // Add the token to the list of revoked tokens
-    revokedTokens.push(token);
-  }
-
-  response.redirect('/login'); 
-}
+  // Destroy the user's session to log them out
+  request.session.destroy((error) => {
+    if (error) {
+      console.error("Error destroying session:", error);
+    }
+    response.redirect("/login"); // Redirect to the login page
+  });
+};
 
 export const checkTokenValidity = ((req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization; 

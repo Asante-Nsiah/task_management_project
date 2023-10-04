@@ -7,19 +7,36 @@
     <link rel="stylesheet" href="/public/create-task.css">
 </head>
 <body>
-    <ul>
-        <li><a href="/user-dashboard?authenticated=true"><button id="myDashboardBtn">My Dashboard</button></a></li>
-        <li> <a href="/create-project?authenticated=true"><button id="createProjectBtn">Create Project</button></a></li>
-        <li> <a href="/project-board?authenticated=true"><button id="ProjectBtn">Project</button></a></li>
-        <li> <a href="/create-task?authenticated=true"><button id="createTaskBtn">Task</button></a></li>
-        <li><button id="settingsBtn">Settings</button></li>
-        <form action="/logout" method="post">
-            <li><button type="submit" class="logout-button">Logout</button></li>
-          </form>
-    </ul>
 
-    <h1>Create Task</h1>
-    <form action="/create-task" method="POST">
+  <div class="sidebar">
+      <h1>Main Dashboard</h1>
+      <p>
+          <span>Welcome: <%= fullName %></span>
+          <span>||</span>
+          <span><%= email %></span>
+      </p>
+      <ul>
+          <li><a href="/user-dashboard"><button id="myDashboardBtn">My Dashboard</button></a></li>
+          <li> <a href="/create-project"><button id="createProjectBtn">Create Project</button></a></li>
+          <li> <a href="/project-board"><button id="ProjectBtn">Project</button></a></li>
+          <li> <a href="#"><button id="createTaskBtn">Task</button></a></li>
+          <li><button id="settingsBtn">Settings</button></li>
+          <form action="/logout" method="post">
+              <li><button type="submit" class="logout-button">Logout</button></li>
+            </form>
+      </ul>
+  </div>
+  <div class="content" >
+    <div class="navbar">
+      <p>
+          <span>Welcome: <%= fullName %></span>
+          <span>||</span>
+          <span><%= email %></span>
+      </p>
+      
+  </div>
+    <div>
+      <form action="/create-task" method="POST">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required><br><br>
         <label for="description">Description:</label>
@@ -28,6 +45,9 @@
         <input type="date" id="deadline" name="deadline"><br><br>
         <button type="submit">Create Task</button>
       </form>
+
+    </div>
+   
       <div class="form-group">
         <h1>Add Assignee</h1>
         <form action="/create-task/add-assignee" method="POST">
@@ -47,6 +67,9 @@
           <% } %>
         </ul>
       </div>
+  </div>
+
+   
 
 </body>
 </html>

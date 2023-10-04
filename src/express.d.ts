@@ -4,12 +4,10 @@ import 'express-session';
 
 declare module 'express-session' {
     interface SessionData {
-      user: {
-        userId: string;
-        full_name: string;
+        userId: number;
+        fullName: string;
         email: string;
-        // isAdmin: boolean;
-      
-      };
+        isAdmin: boolean;
+    
     }
   }

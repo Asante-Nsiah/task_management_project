@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Users } from './user-entity'; 
 import { KanbanColumn } from './kanban-entity'; 
 
@@ -16,9 +16,9 @@ export class Task {
     @Column({ type: 'date', nullable: true })
     deadline?: Date;
 
-    @ManyToOne(() => Users, user => user.assignedTasks, { onDelete: 'SET NULL' })
-    @JoinColumn({ name: 'assignee_id' })
-    assignee!: Users;
+    @ManyToMany(() => Users)
+    @JoinTable()
+     assignees!: Users[];
 
     @ManyToOne(() => KanbanColumn, column => column.tasks, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'column_id' })

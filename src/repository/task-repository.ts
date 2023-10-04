@@ -21,4 +21,10 @@ export class TaskRepository extends Repository<Task> {
       ],
     });
   }
-}
+
+  async findTasksByAssigneeId(assigneeId: number): Promise<Task[]> {
+    return await this.createQueryBuilder('task')
+      .where('task.assigneeId = :assigneeId', { assigneeId })
+      .getMany();
+  }
+  }

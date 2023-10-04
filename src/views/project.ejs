@@ -12,15 +12,15 @@
     <div class="sidebar">
         <h1>Main Dashboard</h1>
         <p>
-            <span>Welcome: <%= userFullName %></span>
+            <span>Welcome: <%= fullName %></span>
             <span>||</span>
-            <span><%= userEmail %></span>
+            <span><%= email %></span>
         </p>
         <ul>
-            <li><a href="/user-dashboard?authenticated=true"><button id="myDashboardBtn">My Dashboard</button></a></li>
-            <li> <a href="/create-project?authenticated=true"><button id="createProjectBtn">Create Project</button></a></li>
-            <li> <a href="/create-project?authenticated=true"><button id="ProjectBtn">Project</button></a></li>
-            <li> <a href="/create-task?authenticated=true"><button id="createTaskBtn">Task</button></a></li>
+            <li><a href="/user-dashboard"><button id="myDashboardBtn">My Dashboard</button></a></li>
+            <li> <a href="/create-project"><button id="createProjectBtn">Create Project</button></a></li>
+            <li> <a href="#"><button id="ProjectBtn">Project</button></a></li>
+            <li> <a href="/create-task"><button id="createTaskBtn">Task</button></a></li>
             <li><button id="settingsBtn">Settings</button></li>
             <form action="/logout" method="post">
                 <li><button type="submit" class="logout-button">Logout</button></li>
@@ -32,9 +32,9 @@
      <!-- project.ejs -->
 <div class="navbar">
     <p>
-        <span>Welcome: <%= userFullName %></span>
+        <span>Welcome: <%= fullName %></span>
         <span>||</span>
-        <span><%= userEmail %></span>
+        <span><%= email %></span>
     </p>
 </div>
 

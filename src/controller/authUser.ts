@@ -4,7 +4,7 @@ import { logger } from "../route/logger";
 import { AppDataSource } from "../route/data-source";
 import { Users } from "../modules/user-entity";
 import bcrypt from "bcrypt";
-import { verifyToken } from "./verifyToken";
+
 import cookieParser from "cookie-parser";
 
 export default async function authenticateUser(
